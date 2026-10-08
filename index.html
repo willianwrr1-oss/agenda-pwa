@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Agenda de Atividades</title>
+<meta name="theme-color" content="#2563EB">
+<meta name="description" content="Agenda de atividades com alarmes, calendário e notas.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ TELA PRINCIPAL ============ -->
+  <section class="screen" id="scr-main">
+    <header class="topbar">
+      <button class="icon-btn" id="btn-cal" data-i18n-title="cd_calendar" type="button">
+        <svg viewBox="0 0 24 24"><path d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm-2 8h14v10H5V10zm2 2v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2z"/></svg>
+      </button>
+      <h1 class="title" data-i18n="title_header">Agenda</h1>
+      <button class="icon-btn" id="btn-menu" data-i18n-title="cd_menu" type="button">
+        <svg viewBox="0 0 24 24"><path d="M12 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+      </button>
+    </header>
+
+    <div class="scroll">
+      <button class="banner" id="notif-banner" type="button" hidden>
+        <span data-i18n="perm_notif_ask">Toque para permitir as notificações.</span>
+      </button>
+
+      <div class="card" id="form-card">
+        <label class="lbl" for="f-title" data-i18n="label_activity_name">Nome da Atividade</label>
+        <input class="inp" id="f-title" type="text" maxlength="120" autocomplete="off" data-i18n-ph="hint_activity">
+
+        <label class="lbl" for="f-desc" data-i18n="label_description">Descrição (opcional)</label>
+        <textarea class="inp" id="f-desc" rows="2" maxlength="1000" data-i18n-ph="hint_description"></textarea>
+
+        <div class="row two">
+          <label class="pick pick-sec" id="pick-date"><span id="lbl-date" data-i18n="btn_date">Data</span><input type="date" id="f-date"></label>
+          <label class="pick pick-sec" id="pick-time"><span id="lbl-time" data-i18n="btn_time">Hora</span><input type="time" id="f-time"></label>
+        </div>
+
+        <label class="chk-row"><input type="checkbox" id="f-sound" checked><span data-i18n="cb_play_sound">Tocar Som</span></label>
+        <div class="row sound-row" id="sound-row">
+          <button class="btn btn-ghost" id="btn-sound" type="button" data-i18n="btn_change_sound">Alterar som</button>
+          <span class="muted small" id="lbl-sound"></span>
+        </div>
+
+        <label class="lbl" for="f-repeat" data-i18n="label_repeat">Repetir Agenda</label>
+        <select class="inp" id="f-repeat">
+          <option value="none" data-i18n="rep_none">Não repetir</option>
+          <option value="daily" data-i18n="rep_daily">Diariamente</option>
+          <option value="weekdays" data-i18n="rep_weekdays">Dias úteis</option>
+          <option value="weekly" data-i18n="rep_weekly">Semanalmente</option>
+          <option value="monthly" data-i18n="rep_monthly">Mensalmente</option>
+          <option value="yearly" data-i18n="rep_yearly">Anualmente</option>
+        </select>
+
+        <button class="btn btn-pri block" id="btn-add" type="button" data-i18n="btn_add_activity">+ Adicionar Atividade</button>
+        <button class="btn btn-ghost block" id="btn-cancel-edit" type="button" hidden data-i18n="btn_cancel_edit">Cancelar edição</button>
+      </div>
+
+      <div class="list-head">
+        <h2 data-i18n="title_activity_list">Lista de Atividades</h2>
+        <button class="btn btn-sec sm" id="btn-finished" type="button" data-i18n="btn_finished">Finalizadas</button>
+      </div>
+      <input class="inp search" id="f-search" type="search" autocomplete="off" data-i18n-ph="hint_search">
+      <div class="day-chip" id="day-chip" hidden>
+        <span id="day-chip-txt"></span>
+        <button class="btn btn-ghost sm" id="btn-clear-day" type="button" data-i18n="btn_clear_day">Limpar dia</button>
+      </div>
+      <div id="list" class="list"></div>
+      <div class="foot-space"></div>
+    </div>
+  </section>
+
+  <!-- ============ FINALIZADAS ============ -->
+  <section class="screen" id="scr-completed" hidden>
+    <header class="topbar">
+      <button class="icon-btn back" data-back data-i18n-title="cd_back" type="button"><svg viewBox="0 0 24 24"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></svg></button>
+      <h1 class="title sm" data-i18n="completed_title">Atividades finalizadas</h1>
+    </header>
+    <div class="scroll">
+      <input class="inp search" id="f-search-done" type="search" autocomplete="off" data-i18n-ph="hint_search_completed">
+      <div id="list-done" class="list"></div>
+    </div>
+  </section>
+
+  <!-- ============ CALENDÁRIO ============ -->
+  <section class="screen" id="scr-calendar" hidden>
+    <header class="topbar">
+      <button class="icon-btn back" data-back data-i18n-title="cd_back" type="button"><svg viewBox="0 0 24 24"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></svg></button>
+      <h1 class="title sm" data-i18n="cal_title">Calendário</h1>
+    </header>
+    <div class="scroll">
+      <div class="cal-stage"><div id="cal-widget"></div></div>
+      <p class="muted small center" data-i18n="cal_hint"></p>
+      <div class="card" id="cal-cfg" hidden></div>
+      <div class="foot-space"></div>
+    </div>
+  </section>
+
+  <!-- ============ NOTAS ============ -->
+  <section class="screen" id="scr-notes" hidden>
+    <header class="topbar">
+      <button class="icon-btn back" data-back data-i18n-title="cd_back" type="button"><svg viewBox="0 0 24 24"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></svg></button>
+      <h1 class="title sm" data-i18n="notes_title">Notas</h1>
+    </header>
+    <div class="scroll" id="notes-scroll">
+      <input class="inp search" id="notes-search" type="search" autocomplete="off" data-i18n-ph="notes_search">
+      <button class="note-create" id="note-create" type="button">
+        <span data-i18n="notes_create">Criar uma nota…</span>
+        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg>
+      </button>
+      <div id="notes-body"></div>
+      <p class="muted small center" id="notes-empty" data-i18n="notes_empty" hidden></p>
+      <p class="muted small center" id="notes-hint" data-i18n="notes_hint"></p>
+      <div class="foot-space"></div>
+    </div>
+    <button class="fab" id="note-fab" type="button" data-i18n-title="notes_add"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></svg></button>
+    <div class="trash" id="note-trash" hidden><svg viewBox="0 0 24 24"><path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg><span data-i18n="note_drop_delete"></span></div>
+  </section>
+
+  <!-- ============ CONFIGURAÇÕES ============ -->
+  <section class="screen" id="scr-settings" hidden>
+    <header class="topbar">
+      <button class="icon-btn back" data-back data-i18n-title="cd_back" type="button"><svg viewBox="0 0 24 24"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></svg></button>
+      <h1 class="title sm" data-i18n="set_title">Configurações</h1>
+    </header>
+    <div class="scroll" id="settings-body"></div>
+  </section>
+
+  <!-- ============ EDITOR DE NOTAS ============ -->
+  <section class="editor" id="note-editor" hidden>
+    <div class="ed-top">
+      <input class="ed-title" id="ne-title" type="text" maxlength="200" autocomplete="off" data-i18n-ph="note_title_ph">
+      <button class="icon-btn" id="ne-pin" type="button" data-i18n-title="note_pin"><svg viewBox="0 0 24 24"><path d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"/></svg></button>
+    </div>
+    <div class="ed-chips" id="ne-chips"></div>
+    <div class="ed-body" id="ne-body" contenteditable="true" spellcheck="true" data-i18n-data-ph="notes_create"></div>
+    <div class="fmt-bar" id="ne-fmt" hidden>
+      <button type="button" data-cmd="bold" data-i18n-title="fmt_bold"><b>B</b></button>
+      <button type="button" data-cmd="italic" data-i18n-title="fmt_italic"><i>I</i></button>
+      <button type="button" data-cmd="underline" data-i18n-title="fmt_underline"><u>U</u></button>
+      <button type="button" data-cmd="strikeThrough" data-i18n-title="fmt_strike"><s>S</s></button>
+      <button type="button" data-cmd="heading" data-i18n-title="fmt_heading"><b>T</b></button>
+      <button type="button" data-cmd="ul" data-i18n-title="fmt_ul"><svg viewBox="0 0 24 24"><path d="M4 10.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm0-6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm0 12a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/></svg></button>
+      <button type="button" data-cmd="ol" data-i18n-title="fmt_ol"><svg viewBox="0 0 24 24"><path d="M2 17h2v.5H3v1h1v.5H2v1h3v-4H2v1zm1-9h1V4H2v1h1v3zm-1 3h1.8L2 13.1v.9h3v-1H3.2L5 10.9V10H2v1zm5-6v2h14V5H7zm0 14h14v-2H7v2zm0-6h14v-2H7v2z"/></svg></button>
+      <button type="button" data-cmd="check" data-i18n-title="fmt_check"><svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 16H5V5h14v14zm-8.5-3.5L7 12l1.4-1.4 2.1 2.1 5.1-5.1L17 9l-6.5 6.5z"/></svg></button>
+      <button type="button" data-cmd="link" data-i18n-title="fmt_link"><svg viewBox="0 0 24 24"><path d="M3.9 12a3.1 3.1 0 0 1 3.1-3.1h4V7H7a5 5 0 0 0 0 10h4v-1.9H7A3.1 3.1 0 0 1 3.9 12zM8 13h8v-2H8v2zm9-6h-4v1.9h4a3.1 3.1 0 0 1 0 6.2h-4V17h4a5 5 0 0 0 0-10z"/></svg></button>
+      <button type="button" data-cmd="clear" data-i18n-title="fmt_clear"><svg viewBox="0 0 24 24"><path d="M3.3 4.6 2 5.9l6.9 6.9L6.5 19h3l1.5-3.8 6.1 6.1 1.3-1.3L3.3 4.6zM6 4v2.4l2 2V6h2.9l-.8 2 2.1 2.1L13.6 6H18v2h2V4H6z"/></svg></button>
+    </div>
+    <div class="ed-bar">
+      <button class="icon-btn" id="ne-fmt-toggle" type="button" data-i18n-title="note_format"><span class="aA">A</span></button>
+      <button class="icon-btn" id="ne-color" type="button" data-i18n-title="note_color"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18 1.5 1.5 0 0 0 1.1-2.5 1.5 1.5 0 0 1 1.1-2.5H16a5 5 0 0 0 5-5c0-4.4-4-8-9-8zM6.5 12a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3-4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3 4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg></button>
+      <button class="icon-btn" id="ne-bell" type="button" data-i18n-title="note_reminder"><svg viewBox="0 0 24 24"><path d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2zm6-6v-5c0-3.1-1.6-5.6-4.5-6.3V4a1.5 1.5 0 0 0-3 0v.7C7.6 5.4 6 7.9 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></button>
+      <button class="icon-btn" id="ne-img" type="button" data-i18n-title="note_image"><svg viewBox="0 0 24 24"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13.5l2.5 3 3.5-4.5 4.5 6H5l3.5-4.5z"/></svg></button>
+      <button class="icon-btn" id="ne-more" type="button" data-i18n-title="note_more"><svg viewBox="0 0 24 24"><path d="M12 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg></button>
+      <span class="grow"></span>
+      <button class="icon-btn" id="ne-undo" type="button" data-i18n-title="note_undo"><svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05 1-6.9 2.6L2 7v9h9l-3.6-3.6A8 8 0 0 1 12.5 10c3.5 0 6.5 2.3 7.6 5.5l2.4-.8C21.2 10.8 17.2 8 12.5 8z"/></svg></button>
+      <button class="icon-btn" id="ne-redo" type="button" data-i18n-title="note_redo"><svg viewBox="0 0 24 24"><path d="M18.4 10.6A10.5 10.5 0 0 0 11.5 8c-4.7 0-8.7 2.8-10 7.7l2.4.8A8 8 0 0 1 11.5 10c1.9 0 3.6.7 5 1.8L13 15.5h9V6.5l-3.6 4.1z"/></svg></button>
+      <button class="btn btn-ghost sm" id="ne-close" type="button" data-i18n="action_close">Fechar</button>
+    </div>
+    <input type="file" id="ne-file" accept="image/*" hidden>
+  </section>
+</div>
+
+<div id="layer"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/version.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/logic.js"></script>
+<script src="js/db.js"></script>
+<script src="js/store.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/notes.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

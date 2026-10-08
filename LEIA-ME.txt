@@ -1,0 +1,13 @@
+AGENDA DE ATIVIDADES – versão PWA 2.0.0 (Android 13 ou superior, Chrome)
+
+COMO PUBLICAR (só pelo site do GitHub)
+1. github.com > New repository > nome: agenda > Public > Create repository.
+2. "uploading an existing file" > arraste TUDO que está dentro desta pasta
+   (index.html, sw.js, manifest.webmanifest e as pastas css, js, icons) > Commit changes.
+3. Settings > Pages > Source: "Deploy from a branch" > Branch: main, pasta /(root) > Save.
+4. Espere 1 a 2 minutos e abra no Chrome do celular:
+   https://SEU-USUARIO.github.io/agenda/
+5. Chrome ⋮ > "Instalar app". Abra pelo ícone novo e permita as notificações.
+
+USE SEMPRE O MESMO ENDEREÇO: os dados ficam guardados naquele endereço, neste aparelho.
+Em Configurações > Backup dos dados, exporte uma cópia de vez em quando.
