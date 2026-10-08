@@ -221,3 +221,7 @@ textarea.inp{resize:vertical;min-height:56px}
 .item{background:color-mix(in srgb,var(--pri) 8%,var(--card));border:1px solid var(--border);border-radius:22px}
 .center-title{white-space:pre!important;font-size:18px!important}
 .cal-stage{background:none!important;padding:0!important;border-radius:0}
+/* relógio 40% menor */
+.clock{padding:10px 6px 8px!important;border-radius:16px!important;margin-bottom:10px!important}
+.clock-time{font-size:34px!important}
+.clock-date{font-size:13px!important;margin-top:0!important}

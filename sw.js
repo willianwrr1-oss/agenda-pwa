@@ -1,5 +1,5 @@
 /* Service worker: funciona offline + ações das notificações */
-var VERSION = 'agenda-v2.0.0';
+var VERSION = 'agenda-v2.0.1';
 var CORE = ['./', 'index.html', 'css/app.css', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/badge.png',
   'js/version.js', 'js/i18n.js', 'js/logic.js', 'js/db.js', 'js/store.js', 'js/sound.js', 'js/ui.js', 'js/calendar.js', 'js/notes.js', 'js/engine.js', 'js/app.js'];
 
