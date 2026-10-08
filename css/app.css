@@ -194,3 +194,30 @@ textarea.inp{resize:vertical;min-height:56px}
 .swatch.sel{border:3px solid var(--pri);box-shadow:0 0 0 2px var(--card)}
 @media (min-width:700px){.scroll{padding-left:max(14px,calc((100% - 760px)/2));padding-right:max(14px,calc((100% - 760px)/2))}}
 @media (prefers-reduced-motion:reduce){.ring-card{animation:none}}
+
+/* relógio e layout da tela principal (igual ao app anterior) */
+.center-title{text-align:center;white-space:pre-line;font-size:19px;line-height:1.25}
+.topbar:has(.center-title)::after{content:"";width:44px;flex:none}
+.clock{background:color-mix(in srgb,var(--pri) 10%,var(--card));border:1px solid var(--border);border-radius:26px;padding:16px 10px 14px;text-align:center;box-shadow:0 3px 10px rgba(0,0,0,.12);margin-bottom:16px}
+.clock-time{font-size:56px;font-weight:700;letter-spacing:.5px;line-height:1.1;color:var(--text);font-variant-numeric:tabular-nums;opacity:.85}
+.clock-date{color:var(--muted);font-size:19px;margin-top:2px}
+#form-card{background:transparent;box-shadow:none;padding:0}
+#form-card .lbl{font-size:17px;color:var(--text);font-weight:700;margin:14px 0 8px}
+#form-card .inp{border-radius:22px;padding:15px 18px;font-size:19px}
+#form-card textarea.inp{min-height:96px}
+.pick{border-radius:99px;padding:18px 12px;font-size:19px}
+.when{text-align:center;color:var(--muted);font-size:19px;margin:12px 0 4px}
+.row.opts{align-items:flex-end;gap:14px}
+.row.opts .chk-row{flex:1;font-size:21px;padding-bottom:14px}
+.row.opts .chk-row input{width:26px;height:26px}
+.rep-box{flex:1.2;text-align:right}
+.rep-box .inp{text-align:left;border:0;background:transparent;border-radius:0;border-bottom:1px solid var(--border);padding:12px 4px}
+.rep-box .lbl{margin:0 0 2px}
+#btn-add{border-radius:99px;padding:17px;font-size:20px;margin-top:22px}
+#btn-finished{background:transparent;border:2px solid var(--pri);color:var(--pri);border-radius:99px;padding:9px 20px;font-size:17px}
+#f-search,#f-search-done,#notes-search{border-radius:22px;padding-left:52px;background:var(--inp) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%236B7280' d='M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z'/%3E%3C/svg%3E") 16px center/26px no-repeat}
+.list-head h2{font-size:26px}
+@media (max-width:400px){.clock-time{font-size:50px}}
+.item{background:color-mix(in srgb,var(--pri) 8%,var(--card));border:1px solid var(--border);border-radius:22px}
+.center-title{white-space:pre!important;font-size:18px!important}
+.cal-stage{background:none!important;padding:0!important;border-radius:0}

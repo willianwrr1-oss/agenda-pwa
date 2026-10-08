@@ -21,8 +21,7 @@
   }
   function updatePickLabels() {
     var d = $('#f-date').value, tm = $('#f-time').value;
-    $('#lbl-date').textContent = d ? UI.dmy(Logic.parseYmd(d)) : t('btn_date');
-    $('#lbl-time').textContent = tm || t('btn_time');
+    $('#when-txt').textContent = (d && tm) ? UI.fmtWhen(Logic.atTime(d, tm)) : '';
   }
   function soundName(id) {
     if (!id) return null;
@@ -338,6 +337,13 @@
   }
 
   /* ================= início ================= */
+  function tickClock() {
+    var n = new Date();
+    $('#clock-time').textContent = UI.pad(n.getHours()) + ':' + UI.pad(n.getMinutes()) + ':' + UI.pad(n.getSeconds());
+    var ds = new Intl.DateTimeFormat(I18N.locale(), { weekday: 'long', day: 'numeric', month: 'long' }).format(n);
+    if ($('#clock-date').textContent !== ds) $('#clock-date').textContent = ds;
+  }
+
   function init() {
     S = Settings.get();
     I18N.set(S.lang || I18N.detect());
@@ -368,7 +374,7 @@
       $('#btn-clear-day').addEventListener('click', function () { dayFilter = null; renderList(); });
       $('#notif-banner').addEventListener('click', function () { Engine.askNotif().then(renderAll); });
 
-      initForm(); renderAll();
+      initForm(); renderAll(); tickClock(); setInterval(tickClock, 1000);
       Engine.start(function () { renderList(); renderBanner(); if (UI.current() === 'calendar') Cal.render(); });
       document.addEventListener('visibilitychange', updateWakeLock); updateWakeLock();
       if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function () {});

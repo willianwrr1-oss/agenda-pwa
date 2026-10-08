@@ -7,9 +7,9 @@
 "es":"Agenda de Actividades"
 },
 "title_header":{
-"pt":"Agenda",
-"en":"Agenda",
-"es":"Agenda"
+"pt":"Agenda\nCronograma de Atividades",
+"en":"Agenda\nActivity Schedule",
+"es":"Agenda\nCronograma de Actividades"
 },
 "cd_menu":{
 "pt":"Menu",

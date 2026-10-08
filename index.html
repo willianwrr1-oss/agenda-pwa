@@ -20,7 +20,8 @@
       <button class="icon-btn" id="btn-cal" data-i18n-title="cd_calendar" type="button">
         <svg viewBox="0 0 24 24"><path d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm-2 8h14v10H5V10zm2 2v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2z"/></svg>
       </button>
-      <h1 class="title" data-i18n="title_header">Agenda</h1>
+      <h1 class="title center-title" data-i18n="title_header">Agenda
+Cronograma de Atividades</h1>
       <button class="icon-btn" id="btn-menu" data-i18n-title="cd_menu" type="button">
         <svg viewBox="0 0 24 24"><path d="M12 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
       </button>
@@ -31,6 +32,8 @@
         <span data-i18n="perm_notif_ask">Toque para permitir as notificações.</span>
       </button>
 
+      <div class="clock" id="clock"><div class="clock-time" id="clock-time">--:--:--</div><div class="clock-date" id="clock-date"></div></div>
+
       <div class="card" id="form-card">
         <label class="lbl" for="f-title" data-i18n="label_activity_name">Nome da Atividade</label>
         <input class="inp" id="f-title" type="text" maxlength="120" autocomplete="off" data-i18n-ph="hint_activity">
@@ -39,25 +42,30 @@
         <textarea class="inp" id="f-desc" rows="2" maxlength="1000" data-i18n-ph="hint_description"></textarea>
 
         <div class="row two">
-          <label class="pick pick-sec" id="pick-date"><span id="lbl-date" data-i18n="btn_date">Data</span><input type="date" id="f-date"></label>
-          <label class="pick pick-sec" id="pick-time"><span id="lbl-time" data-i18n="btn_time">Hora</span><input type="time" id="f-time"></label>
+          <label class="pick pick-sec" id="pick-date"><span data-i18n="btn_date">Data</span><input type="date" id="f-date"></label>
+          <label class="pick pick-sec" id="pick-time"><span data-i18n="btn_time">Hora</span><input type="time" id="f-time"></label>
         </div>
 
-        <label class="chk-row"><input type="checkbox" id="f-sound" checked><span data-i18n="cb_play_sound">Tocar Som</span></label>
-        <div class="row sound-row" id="sound-row">
-          <button class="btn btn-ghost" id="btn-sound" type="button" data-i18n="btn_change_sound">Alterar som</button>
-          <span class="muted small" id="lbl-sound"></span>
-        </div>
+        <div class="when" id="when-txt"></div>
 
-        <label class="lbl" for="f-repeat" data-i18n="label_repeat">Repetir Agenda</label>
-        <select class="inp" id="f-repeat">
+        <div class="row opts">
+          <label class="chk-row"><input type="checkbox" id="f-sound" checked><span data-i18n="cb_play_sound">Tocar Som</span></label>
+          <div class="rep-box">
+            <label class="lbl" for="f-repeat" data-i18n="label_repeat">Repetir Agenda</label>
+            <select class="inp" id="f-repeat">
           <option value="none" data-i18n="rep_none">Não repetir</option>
           <option value="daily" data-i18n="rep_daily">Diariamente</option>
           <option value="weekdays" data-i18n="rep_weekdays">Dias úteis</option>
           <option value="weekly" data-i18n="rep_weekly">Semanalmente</option>
           <option value="monthly" data-i18n="rep_monthly">Mensalmente</option>
           <option value="yearly" data-i18n="rep_yearly">Anualmente</option>
-        </select>
+            </select>
+          </div>
+        </div>
+        <div class="row sound-row" id="sound-row">
+          <button class="btn btn-ghost" id="btn-sound" type="button" data-i18n="btn_change_sound">Alterar som</button>
+          <span class="muted small" id="lbl-sound"></span>
+        </div>
 
         <button class="btn btn-pri block" id="btn-add" type="button" data-i18n="btn_add_activity">+ Adicionar Atividade</button>
         <button class="btn btn-ghost block" id="btn-cancel-edit" type="button" hidden data-i18n="btn_cancel_edit">Cancelar edição</button>
